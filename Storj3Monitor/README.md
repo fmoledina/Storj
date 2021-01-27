@@ -30,7 +30,7 @@ https://github.com/PowerShell/PowerShell
 <code>
 mkdir /etc/scripts/storj
 cd /etc/scripts/storj<br/>
-curl -O https://raw.githubusercontent.com/Krey81/Storj/master/Storj3Monitor/Storj3Monitor.ps1<br/>
+curl -O https://raw.githubusercontent.com/fmoledina/Storj/master/Storj3Monitor/Storj3Monitor.ps1<br/>
 </code>
 
 <h3>3. First run</h3>
@@ -51,7 +51,7 @@ you can ask default config with pwsh ./Storj3Monitor.ps1 example
 </pre>
 
 <h3>4. Create config</h3>
-Look examples at https://github.com/Krey81/Storj/tree/master/Storj3Monitor/ConfigSamples <br/>
+Look examples at https://github.com/fmoledina/Storj/tree/master/Storj3Monitor/ConfigSamples <br/>
 
 <ul>
   <li><b>Storj3Monitor-builtinMail.conf</b></li>

@@ -771,7 +771,7 @@ function QueryNode
     $dash = $null
     try {
         if ($null -eq $config) {Write-Error "Bad config in QueryNode"}
-        $dash = GetJson -uri ("http://{0}/api/sno" -f $address) -timeout $config.TimeoutSec
+        $dash = GetJson -uri ("{0}/api/sno" -f $address) -timeout $config.TimeoutSec
 
         $name = GetNodeName -config $config -id $dash.nodeID
         if ($null -ne $query.Node) {
@@ -800,7 +800,7 @@ function QueryNode
             $waitList = New-Object System.Collections.Generic.List[[InProcess.InMemoryJob]]
             $dash.satellites | ForEach-Object {
                 $satid = $_.id
-                $job = StartWebRequest -Name ("SatQueryJob node {0}, sat {1}" -f $name, $satid) -Address ("http://{0}/api/sno/satellite/{1}" -f $address, $satid) -Timeout $config.TimeoutSec
+                $job = StartWebRequest -Name ("SatQueryJob node {0}, sat {1}" -f $name, $satid) -Address ("{0}/api/sno/satellite/{1}" -f $address, $satid) -Timeout $config.TimeoutSec
                 $waitList.Add($job)
             }
             GetJobResultFailSafe -waitList $waitList -timeoutSec $config.TimeoutSec | ForEach-Object { $satResult.Add($_) }
@@ -812,7 +812,7 @@ function QueryNode
                 try 
                 {
                     Write-Host -NoNewline ("query {0} sat {1}..." -f $address, $satid)
-                    $sat = GetJson -uri ("http://{0}/api/sno/satellite/{1}" -f $address, $satid) -timeout $config.TimeoutSec
+                    $sat = GetJson -uri ("{0}/api/sno/satellite/{1}" -f $address, $satid) -timeout $config.TimeoutSec
                     $satResult.Add($sat)
                     Write-Host ("completed {0} sec" -f ([int](([System.DateTimeOffset]::Now - $t).TotalSeconds)))
                 }
@@ -867,7 +867,7 @@ function QueryNode
         try {
             #$pays = ((Invoke-WebRequest -Uri  http://192:4401/api/heldamount/paystubs/2019-02/2020-05).content | ConvertFrom-Json)
             $earlest = ($dash | Select-Object -ExpandProperty Sat | Measure-Object -Minimum nodeJoinedAt).Minimum
-            $paym = GetJson -uri ("http://{0}/api/heldamount/paystubs/{1}/{2}" -f `
+            $paym = GetJson -uri ("{0}/api/heldamount/paystubs/{1}/{2}" -f `
                 $address, `
                 ($earlest.Year.ToString() + "-" + $earlest.Month.ToString()), `
                 ([System.DateTimeOffset]::Now.Year.ToString() + "-" + [System.DateTimeOffset]::Now.Month.ToString()) `
